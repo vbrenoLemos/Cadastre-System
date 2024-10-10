@@ -62,7 +62,7 @@ public class Main {
         File Directory = new File("Users");
         String name = sc.nextLine();
         String email = sc.nextLine();
-        if(emailExists(email)) {
+        if (emailExists(email)) {
             System.out.println("E-mail já existe");
             return;
         }
@@ -75,11 +75,13 @@ public class Main {
         while (true) {
             try {
                 age = sc.nextInt();
+                sc.nextLine();
                 if (age < 0 || age > 150) {
                     throw new ValuesException("Invalid Age.");
                 }
                 break;
             } catch (InputMismatchException e) {
+                sc.nextLine();
                 throw new ValuesException("Invalid Age. Must be a whole number." + e.getMessage());
             }
         }
@@ -87,17 +89,31 @@ public class Main {
         while (true) {
             try {
                 height = sc.nextDouble();
+                sc.nextLine();
                 if (height < 0 || height > 3.0) {
                     throw new ValuesException("Invalid height.");
                 }
                 break;
             } catch (InputMismatchException e) {
+                sc.nextLine();
                 throw new ValuesException("Invalid height. Must be a decimal number." + e.getMessage());
             }
         }
+        List<String> answers = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(questions))) {
+            String line;
+            int lineNumber = 0;
+            while ((line = br.readLine()) != null) {
+                lineNumber++;
+                if (lineNumber >= 5) {
+                    answers.add(sc.nextLine());
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-
-        User user = new User(name, email, age, height);
+        User user = new User(name, email, age, height, answers);
         SaveUserInfo(user);
         File file = new File(Directory, name.toUpperCase().trim().replaceAll("\\s+", "") + ".txt");
         try (FileWriter fw = new FileWriter(file);) {
@@ -228,7 +244,7 @@ public class Main {
         }
     }
 
-    private static void SearchUser () {
+    private static void SearchUser() {
         Scanner sc = new Scanner(System.in);
         System.out.print("Digite o nome, idade ou e-mail do usuário que você deseja pesquisar: ");
         String search = sc.nextLine().toLowerCase();
@@ -278,10 +294,15 @@ public class Main {
 
         for (File file : files) {
             try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-                br.readLine(); // skip the first line (name)
-                String fileEmail = br.readLine().trim().toLowerCase();
-                if (fileEmail.equals(email.toLowerCase())) {
-                    return true;
+                String line;
+                while ((line = br.readLine()) != null) {
+                    if (line.startsWith("E-mail: ")) {
+                        String fileEmail = line.substring(7).trim().toLowerCase();
+                        if (fileEmail.equals(email.toLowerCase())) {
+                            return true;
+                        }
+                        break;
+                    }
                 }
             } catch (IOException e) {
                 System.err.println("Erro ao ler arquivo: " + file.getName());
