@@ -32,6 +32,22 @@ public class User {
         return name;
     }
 
+    public int getAge() {
+        return age;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
+    public String getName() {
+        return name;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
