@@ -148,7 +148,7 @@ public class UserService  extends EmailValidate {
                     System.out.println("Nome: " + name);
                     System.out.println("E-mail: " + email);
                     System.out.println("Idade: " + age);
-                    System.out.println("Altura: " + height);
+                    System.out.println("Altura: " + height + " metros");
                     System.out.println();
                     found = true;
                 }
