@@ -1,4 +1,5 @@
-import java.util.ArrayList;
+package Domain;
+
 import java.util.List;
 
 public class User {

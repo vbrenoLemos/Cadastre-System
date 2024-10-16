@@ -1,10 +1,17 @@
+package Services;
+
+import Domain.User;
+import Exceptions.EmailValidator;
+import Exceptions.ValuesException;
+import Validate.EmailValidate;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
-public class UserService {
+public class UserService  extends EmailValidate {
     protected static void Register() throws ValuesException {
         File questions = new File("formulario.txt");
         try (FileReader fr = new FileReader(questions)) {
@@ -155,31 +162,4 @@ public class UserService {
         }
     }
 
-    private static boolean emailExists(String email) {
-        File Directory = new File("Users");
-        File[] files = Directory.listFiles((file) -> file.isFile() && file.getName().endsWith(".txt"));
-
-        if (files == null || files.length == 0) {
-            return false;
-        }
-
-        for (File file : files) {
-            try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-                String line;
-                while ((line = br.readLine()) != null) {
-                    if (line.startsWith("E-mail: ")) {
-                        String fileEmail = line.substring(7).trim().toLowerCase();
-                        if (fileEmail.equals(email.toLowerCase())) {
-                            return true;
-                        }
-                        break;
-                    }
-                }
-            } catch (IOException e) {
-                System.err.println("Erro ao ler arquivo: " + file.getName());
-            }
-        }
-
-        return false;
-    }
 }

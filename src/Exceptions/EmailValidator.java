@@ -1,3 +1,5 @@
+package Exceptions;
+
 public class EmailValidator extends Exception {
     static final String EMAIL_PATTERN = "^[\\w.+\\-]+@gmail\\.com$";
     public static void validateEmail(String email) throws EmailValidator {

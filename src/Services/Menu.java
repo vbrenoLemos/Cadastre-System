@@ -1,7 +1,11 @@
+package Services;
+
+import Exceptions.ValuesException;
+
 import java.util.Scanner;
 
 public class Menu {
-    static void Menu() {
+   protected static void Menu() {
         Scanner sc = new Scanner(System.in);
         System.out.println("""
                 1 - Cadastrar o usuário
