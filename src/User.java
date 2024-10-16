@@ -20,20 +20,8 @@ public class User {
         return age;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public double getHeight() {
-        return height;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getAge() {
-        return age;
+    public List<String> getAnswers() {
+        return answers;
     }
 
     public String getEmail() {
